@@ -5,11 +5,23 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Configuration;
 
 namespace MultiToolExtensions
 {
     public static class AppExtensions
     {
+        /// <summary>
+        /// Updates the value of the given key in the appSettings section of the project App.config to the value of the string.
+        /// </summary>
+        public static void SaveAppConfigSetting(this string object_value, string key)
+        {
+            Configuration configuration =
+                ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            configuration.AppSettings.Settings[key].Value = object_value;
+            configuration.Save(ConfigurationSaveMode.Full, true);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
         /// <summary>
         /// Writes the contents of the string to a text file at the given path.
         /// </summary>
@@ -275,9 +287,9 @@ namespace MultiToolExtensions
             }
             return urn;
         }
-        public static string CleanFileName(string filename)
+        public static string CleanFileName(this string object_value)
         {
-            string outstr = filename;
+            string outstr = object_value;
             foreach (KeyValuePair<string, string> spc in Definitions.SpecialCharSubstitutions)
             {
                 outstr = outstr.Replace(spc.Key, spc.Value);

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.7</Version>
+    <Version>1.0.9</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>MultiToolExtensions</PackageId>
     <Authors>Jake Meyer</Authors>
@@ -15,11 +15,15 @@
 - Class SQL CRUD method generation
 - Country, state and county validation and abbreviation for USA, Canada, Mexico, and Great Britain
 - SSN string locator</Description>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
-    <FileVersion>1.0.7.0</FileVersion>
-    <PackageReleaseNotes>Added MethodTelemetry class.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.9.0</AssemblyVersion>
+    <FileVersion>1.0.9.0</FileVersion>
+    <PackageReleaseNotes>Made change to CleanFileName</PackageReleaseNotes>
     <AssemblyName>MultiToolExtensions</AssemblyName>
     <RootNamespace>MultiToolExtensions</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+  </ItemGroup>
 
 </Project>
