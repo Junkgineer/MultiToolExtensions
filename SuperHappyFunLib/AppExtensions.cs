@@ -6,11 +6,39 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Configuration;
+using System.Drawing;
 
 namespace MultiToolExtensions
 {
     public static class AppExtensions
     {
+        /// <summary>
+        /// Returns a random color with an alpha of 255
+        /// </summary>
+        /// <param name="object_value"></param>
+        /// <returns></returns>
+        public static Color RandomColor(this Color object_value)
+        {
+            var rand = new Random();
+            var bytes = new byte[3];
+            rand.NextBytes(new byte[3]);
+            Color randColor = Color.FromArgb(255, bytes[0], bytes[1], bytes[2]);
+            return randColor;
+        }
+        /// <summary>
+        /// Returns a random color with the given alpha value
+        /// </summary>
+        /// <param name="object_value"></param>
+        /// <param name="alpha"></param>
+        /// <returns></returns>
+        public static Color RandomColor(this Color object_value, byte alpha)
+        {
+            var rand = new Random();
+            var bytes = new byte[3];
+            rand.NextBytes(new byte[3]);
+            Color randColor = Color.FromArgb(255, bytes[0], bytes[1], bytes[2]);
+            return randColor;
+        }
         /// <summary>
         /// Updates the value of the given key in the appSettings section of the project App.config to the value of the string.
         /// </summary>
@@ -52,7 +80,7 @@ namespace MultiToolExtensions
             }
         }
         /// <summary>
-        /// Takes any length URN and converts it to an unbracketed list.
+        /// Takes any length URN and converts it to an unbracketed <code>List<string></code>.
         /// </summary>
         public static List<string> URNToList(this string fullurn)
         {
@@ -189,7 +217,7 @@ namespace MultiToolExtensions
             return urn;
         }
         /// <summary>
-        /// Takes a column name, and prepends it with the given table and database/schema name.
+        /// Takes a column name, and prepends it with the bracketed given table and bracketed database/schema name.
         /// </summary>
         /// <example>
         /// <code>
@@ -239,6 +267,25 @@ namespace MultiToolExtensions
             string urn = string.Format("{0}.{1}.{2}", database, table, column);
             return urn;
         }
+        /// <summary>
+        /// Converts an SQL table URN string into a <code>List<string></code>,
+        /// If the object URN contains 2 or less items, the item at index 0 
+        /// will be considered the table name, and the given parent database will be prepended.
+        /// If the object URN contains 3 items, the item at index 1 will be considered the
+        /// table name, and the given parent database will be prepended. 
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// string table_urn_foo = "FooTable.BarColumn";
+        /// List<string> table_urn_bar = table_urn_foo.ToTableURN();
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <code>
+        /// string table_urn_foo = "[SomeDB].[FooTable].[BarColumn]";
+        /// List<string> table_urn_bar = table_urn_foo.ToTableURN();
+        /// </code>
+        /// </example>
         public static string ToTableURN(this string object_urn)
         {
             List<string> rawurn = object_urn.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
@@ -253,6 +300,32 @@ namespace MultiToolExtensions
             }
             return urn;
         }
+        /// <summary>
+        /// Converts a SQL table URN string into a <code>List<string></code>,
+        /// and prepends the given parent database. If the object URN contains 2 or less
+        /// items, the item at index 0 will be considered the table name, and the given 
+        /// parent database will be prepended.
+        /// If the object URN contains 3 items, the item at index 1 will be considered the
+        /// table name, and the given parent database will be prepended. 
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// string table_urn_foo = "[FooTable].[BarColumn]";
+        /// List<string> table_urn_bar = table_urn_foo.ToTableURN("SomeDB");
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <code>
+        /// string table_urn_foo = "[SomeDB].[FooTable].[BarColumn]";
+        /// List<string> table_urn_bar = table_urn_foo.ToTableURN("SomeOtherDB");
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <code>
+        /// string table_urn_foo = "SomeDB.FooTable.BarColumn";
+        /// List<string> table_urn_bar = table_urn_foo.ToTableURN("SomeOtherDB");
+        /// </code>
+        /// </example> 
         public static string ToTableURN(this string object_urn, string parentdatabase)
         {
             List<string> rawurn = object_urn.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
@@ -275,6 +348,15 @@ namespace MultiToolExtensions
             }
             return urn;
         }
+        /// <summary>
+        /// Converts a full, bracketed, SQL URN string into a <code>List<string></code>
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// string urn_foo = "[SomeDB].[FooTable].[BarColumn]";
+        /// List<string> urn_bar = urn_foo.BreakoutURN();
+        /// </code>
+        /// </example>
         public static List<string> BreakoutURN(this string fullurn)
         {
             List<string> rawurn = fullurn.Split(new string[] { "].[" }, StringSplitOptions.None).ToList<string>();
@@ -287,6 +369,10 @@ namespace MultiToolExtensions
             }
             return urn;
         }
+        /// <summary>
+        /// Removes unsafe characters that are commonly used as spaces (or spaces themselves)
+        /// and replaces them with underscores.
+        /// </summary>
         public static string CleanFileName(this string object_value)
         {
             string outstr = object_value;
@@ -298,31 +384,12 @@ namespace MultiToolExtensions
             outstr = outstr.Replace(" ", "_");
             return outstr;
         }
-        public static string toStringList(this List<string> object_value)
-        {
-            if (object_value.Count != 0)
-            {
-                StringBuilder builder = new StringBuilder();
-                foreach (string item in object_value)
-                {
-                    if (item != "")
-                    {
-                        builder.Append(item).Append(",");
-                    }
-                }
-                string resultstr = builder.ToString();
-                if (resultstr.Length >= 1)
-                {
-                    resultstr = resultstr.Substring(0, resultstr.Length - 1);
-                }
-                return resultstr;
-            }
-            else
-            {
-                return "";
-            }
-        }
-        public static string toStringList(this List<string> object_value, string delimiter)
+        /// <summary>
+        /// Converts a List<string> object to a string using the given delimiter.
+        /// </summary>
+        /// <param name="object_value">[Required] The calling object.</param>
+        /// <param name="delimiter">[Optional] The delimiter to use (defaults to a comma).</param>
+        public static string toStringList(this List<string> object_value, string delimiter=",")
         {
             if (object_value.Count != 0)
             {
@@ -344,7 +411,7 @@ namespace MultiToolExtensions
             }
         }
         /// <summary>
-        /// Returns true if the object has a value of 0. Checks for other nulls that it can never be as well...just in case...
+        /// Returns true if the object has a value of 0. Checks for other nulls that it can never be as well...just because.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         public static bool isNull(this int object_value)
@@ -356,8 +423,8 @@ namespace MultiToolExtensions
             return false;
         }
         /// <summary>
-        /// Returns true if the object has a value of null, is of type null, or is of type DBNull. The original object
-        /// value is overwritten.
+        /// Returns true if the object is null, the objects' default value, or DBNull.
+        /// The original object value is overwritten.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         public static bool isNull(this object object_value)
@@ -369,6 +436,11 @@ namespace MultiToolExtensions
 
             return false;
         }
+        /// <summary>
+        /// Returns true if the string object is null, the string default value, an empty string or DBNull.
+        /// The original object value is overwritten.
+        /// </summary>
+        /// <param name="object_value">[Required] The calling object.</param>
         public static bool isNull(this string object_value)
         {
             if (object_value == default(string) || object_value == "" || object_value == null || object_value.GetType() == null || object_value.GetType() == typeof(System.DBNull))
@@ -386,8 +458,8 @@ namespace MultiToolExtensions
             return false;
         }
         /// <summary>
-        /// Returns true_value parameter object if the calling object is null, or retains the object value if it is not null. The original object
-        /// value is overwritten.
+        /// Returns true_value parameter object if the calling object is null, the objects' default value, or DBNull, 
+        /// or retains the object value if it is not null. The original object value is overwritten.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         /// <param name="true_value">[Optional] The object to return if the calling object is null.</param>
@@ -400,8 +472,8 @@ namespace MultiToolExtensions
             return object_value;
         }
         /// <summary>
-        /// Returns true_value parameter string if the calling object is null (including an empty string!), or retains the object value if it is not null. The original object
-        /// value is overwritten.
+        /// Returns true_value parameter string if the calling object is null, the string default value, an empty string or DBNull,
+        /// or retains the object value if it is not null. The original object value is overwritten.
         /// </summary>
         /// <param name="object_value">[Required] The calling string object.</param>
         /// <param name="true_value">[Optional] The string object to return if the calling string object is null.</param>
@@ -435,8 +507,8 @@ namespace MultiToolExtensions
             return object_value;
         }
         /// <summary>
-        /// Returns the true_value parameter object if the object is null, or the false_value if it is not null. The original object
-        /// value is overwritten.
+        /// Returns the true_value parameter object if the object is null, the objects' default value, an empty string or DBNull, 
+        /// or the false_value if it is not any of these. The original object value is overwritten.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         /// <param name="true_value">[Optional] The object to return if the calling object is null.</param>
@@ -450,8 +522,8 @@ namespace MultiToolExtensions
             return false_value;
         }
         /// <summary>
-        /// Returns the true_value parameter object if the object is null, or the false_value if it is not null. The original object
-        /// value is overwritten.
+        /// Returns the true_value parameter string if the string object is null, the string default value, an empty string or DBNull, 
+        /// or the false_value if it is not any of these. The original object value is overwritten.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         /// <param name="true_value">[Optional] The object to return if the calling object is null.</param>
@@ -466,7 +538,8 @@ namespace MultiToolExtensions
 
         }
         /// <summary>
-        /// Returns true if the object has a value of 0, or the false_value if it is not 0. I don't care if the rest of the null checks on an int are useless...it's here just because.
+        /// Returns true if the object has a value of 0, or the false_value if it is not 0. 
+        /// I don't care if the rest of the null checks on an int are useless...it's here just because.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         /// <param name="true_value">[Optional] The string object to return if the calling string object is null.</param>
@@ -1502,6 +1575,8 @@ namespace MultiToolExtensions
         }
         /// <summary>
         /// Replaces any text in the string that appears to be a valid SSN with "xxx-xx-xxxx".
+        /// WARNING: This is NOT to be a considered a 'fail safe' sanitizer for PII, and will
+        /// also treat strings with a similar structure as an SSN. Use discretion!
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         public static string SanitizeSSN(this string object_value)
@@ -1516,92 +1591,7 @@ namespace MultiToolExtensions
             long number = 0;
             return long.TryParse(object_value, out number);
         }
-        public static Dictionary<string, string> GenerateSQLFunctions(this object value, string schemaname = "SCHEMA", string tablename = "TABLE")
-        {
-            Dictionary<string, string> allfunctions = new Dictionary<string, string>();
-            Dictionary<string, object> attribs = value.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary
-            (
-                propInfo => propInfo.Name,
-                propInfo => propInfo.GetValue(value, null)
-            );
-            string SELECTFunction = @"
-                SELECT
-";
-            string UPDATEFunction = "\n        public bool Save()\n        {            bool _success = false;\n            if (Connection is null)\n            {                return _success;\n            }\n            string query = @\"\n                UPDATE ";
-            UPDATEFunction += string.Format("[{0}].[{1}] SET \n", schemaname, tablename);
-            string INSERTFunction = "            public bool Create()            {                bool _success = false;                if (Connection.State == ConnectionState.Closed)                {                    Connection.Open();                }                string query = @\"INSERT INTO ";
-            INSERTFunction += string.Format("[{0}].[{1}] (\n", schemaname, tablename);
-            string insertcolumns = "\n              ) OUTPUT INSERTED.ID VALUES (\n";
-            string parameters = "";
-            string assignments = "";
-            foreach (string attrib in attribs.Keys)
-            {
-                INSERTFunction += string.Format("                   [{0}],\n", attrib);
-                insertcolumns += string.Format("                    @{0},\n", attrib);
-                UPDATEFunction += string.Format("                   [{0}] = @{0},\n", attrib);
-                SELECTFunction += string.Format("                   [{0}],\n", attrib);
-                parameters += string.Format("               command.Parameters.Add(new SqlParameter(\"@{0}\", this.{0}.isNull(\"\")));\n", attrib);
-                assignments += string.Format("                      record.{0} = reader[\"{0}\"].isNull(\"\").ToString();\n", attrib);
-            }
-            INSERTFunction = INSERTFunction.Substring(0, INSERTFunction.Length - 2);
-            insertcolumns = insertcolumns.Substring(0, insertcolumns.Length - 2);
-            INSERTFunction += insertcolumns;
-            UPDATEFunction = string.Format("{0}\n WHERE [ID] = @ID\n", UPDATEFunction.Substring(0, UPDATEFunction.Length - 2));
-            SELECTFunction = string.Format("{0}\nFROM [{1}].[{2}]\n\";", SELECTFunction.Substring(0, SELECTFunction.Length - 2), schemaname, tablename);
-
-            string FunctionAddParameters = @"
-"";
-            using (SqlCommand command = new SqlCommand(query, this.Connection))
-            {
-                ";
-            FunctionAddParameters += parameters;
-            string FunctionExecuteClose = @"
-                if (this.Connection.State != ConnectionState.Open)
-                {
-                    this.Connection.Open();
-                }
-                int newID = Convert.ToInt32(command.ExecuteScalar());
-            }
-            _success = true;
-            return _success;
-        }";
-            FunctionAddParameters += FunctionExecuteClose;
-            INSERTFunction += FunctionAddParameters;
-            UPDATEFunction += FunctionAddParameters;
-
-            string SelectAddReader = @"
-            using (SqlCommand command = new SqlCommand(query, this.Connection))
-            {
-                if (this.Connection.State != ConnectionState.Open)
-                {
-                    this.Connection.Open();
-                }
-                List<Object> records = new List<Object>();
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        Object record = new Object();
-                        ";
-            SelectAddReader += assignments;
-            SelectAddReader += @"
-                        records.Add(record);
-                    }
-                }
-
-                reader.Close();
-            }
-
-            return _success;
-        }
-";
-            SELECTFunction += SelectAddReader;
-            allfunctions.Add("INSERT", INSERTFunction);
-            allfunctions.Add("SELECT", SELECTFunction);
-            allfunctions.Add("UPDATE", UPDATEFunction);
-            return allfunctions;
-        }
+        
         public static bool isValidUSState(this string object_value)
         {
             if (_US_States.Keys.Contains(object_value) || _US_States.Values.Contains(object_value))
@@ -1614,7 +1604,7 @@ namespace MultiToolExtensions
             }
         }
         /// <summary>
-        /// Checks to see if value is a valid name of an Oklahoma County.
+        /// Checks to see if string object value is a valid name of an Oklahoma County.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         public static bool isValidOKCounty(this string object_value)
@@ -1629,7 +1619,7 @@ namespace MultiToolExtensions
             }
         }
         /// <summary>
-        /// Capitalizes the first letter of the given string.
+        /// Capitalizes the first letter of the given string object value.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         public static string ProperNoun(this string object_value)
@@ -1644,9 +1634,14 @@ namespace MultiToolExtensions
             }
 
         }
-        public static int LevenshteinDistance(this string s, string t)
+        /// <summary>
+        /// Calculates the Levenshtein Distance score of the string pbject value and the given string parameter.
+        /// </summary>
+        /// <param name="object_value">[Required] The calling object.</param>
+        /// <param name="t">[Required] The comparison string.</param>
+        public static int LevenshteinDistance(this string object_value, string t)
         {
-            int n = s.Length;
+            int n = object_value.Length;
             int m = t.Length;
             int[,] d = new int[n + 1, m + 1];
             if (n == 0)
@@ -1671,7 +1666,7 @@ namespace MultiToolExtensions
             {
                 for (int j = 1; j <= m; j++)
                 {
-                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
+                    int cost = (t[j - 1] == object_value[i - 1]) ? 0 : 1;
 
                     d[i, j] = Math.Min(
                         Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
@@ -1680,6 +1675,11 @@ namespace MultiToolExtensions
             }
             return d[n, m];
         }
+        /// <summary>
+        /// Calculates the Levenshtein Distance score of the string object value and the given string parameter with the inclusion of transpositions.
+        /// </summary>
+        /// <param name="object_value">[Required] The calling object.</param>
+        /// <param name="t">[Required] The comparison string.</param>
         public static int DamerauLevenshteinDistance(this string s, string t)
         {
             var bounds = new { Height = s.Length + 1, Width = t.Length + 1 };
@@ -1771,6 +1771,10 @@ namespace MultiToolExtensions
                 return new string[0];
             }
         }
+        /// <summary>
+        /// Slices the given list matching the RangeTuple Start and End values. If array is shorter than the length
+        /// of the RangeTuple, slice will be from RangeTuple.Start to the end of the given array.
+        /// </summary>
         public static List<dynamic> ListSlice(this RangeTuple object_value, List<dynamic> list_value)
         {
             if (object_value.Length > 0 && list_value.Count > 0)
@@ -1797,6 +1801,9 @@ namespace MultiToolExtensions
             }
         }
     }
+    /// <summary>
+    /// A basic tuple specifically for handling integer ranges.
+    /// </summary>
     public struct RangeTuple
     {
         public int Start { get; set; }
