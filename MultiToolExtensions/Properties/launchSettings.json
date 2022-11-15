@@ -1,8 +1,7 @@
 {
   "profiles": {
     "MultiToolExtensions": {
-      "commandName": "Executable",
-      "executablePath": "C:\\Users\\jakem\\source\\repos\\SuperHappyFunLib\\PackageRunner\\bin\\Debug\\netcoreapp3.1\\PackageRunner.exe"
+      "commandName": "Project"
     }
   }
 }

@@ -9,7 +9,7 @@ namespace MultiToolExtensions
     public static class Definitions
     {
         /// <summary>
-        /// A standardized set of file-safe replacements for special characters.
+        /// A standardized set of file-safe replacements for special characters commonly found in Microsoft Access Database queries, table and column names.
         /// </summary>
         public static Dictionary<string, string> SpecialCharSubstitutions = new Dictionary<string, string>()
         {
@@ -38,10 +38,13 @@ namespace MultiToolExtensions
         };
     }
     /// <summary>
-    /// Dictionaries and Lists of specifically SQL reserved words and operators. 
+    /// Dictionaries and Lists of ODBC and T-SQL specific reserved words and operators. 
     /// </summary>
     public static class SQLDefinitions
     {
+        /// <summary>
+        /// Find and Replace based Dictionary for changing the common MS Access query syntax to valid T-SQL.
+        /// </summary>
         public static Dictionary<string, string> Easy_Clean = new Dictionary<string, string>() {
             { "DELETE *", "DELETE" },
             { "DISTINCTROW", "DISTINCT" },
@@ -49,7 +52,13 @@ namespace MultiToolExtensions
             { "]!","]." },
             { "\"","'" }
         };
+        /// <summary>
+        /// List of primary query types to aid in query classification during parsing.
+        /// </summary>
         public static List<string> PrimaryQueryTypes = new List<string>() { "SELECT", "INSERT", "UPDATE", "DELETE", "TRANSFORM", "PARAMETERS" };
+        /// <summary>
+        /// List of all ODBC reserved words to aid in programmatic query creation and parsing.
+        /// </summary>
         public static List<string> Reserved_ODBC = new List<string>()
         {
             "ABSOLUTE",
@@ -288,6 +297,9 @@ namespace MultiToolExtensions
             "ZONE",
             "EXCEPTION"
         };
+        /// <summary>
+        /// List of all T-SQL reserved words to aid in programmatic query creation and parsing.
+        /// </summary>
         public static List<string> Reserved_TSQL = new List<string>() {
         "ADD",
         "EXTERNAL",
@@ -476,6 +488,9 @@ namespace MultiToolExtensions
         "EXIT",
         "PROC"
     };
+        /// <summary>
+        /// List of all T-SQL functions to aid in programmatic query creation and parsing.
+        /// </summary>
         public static List<string> Functions_TSQL = new List<string>() {
         "ASCII",
         "CHAR",
@@ -533,6 +548,9 @@ namespace MultiToolExtensions
         "SYSTEM_USER",
         "USER_NAME"
     };
+        /// <summary>
+        /// List of all T-SQL JOINs to aid in programmatic query creation and parsing.
+        /// </summary>
         public static List<string> Joins_TSQL = new List<string>() {
         "INNER",
         "LEFT",
@@ -541,6 +559,9 @@ namespace MultiToolExtensions
         "SELF",
         "CARTESIAN"
     };
+        /// <summary>
+        /// List of all T-SQL logical operators to aid in programmatic query creation and parsing.
+        /// </summary>
         public static List<string> Logical_Operators_TSQL = new List<string>() {
         "ALL",
         "AND",
@@ -553,6 +574,9 @@ namespace MultiToolExtensions
         "OR",
         "SOME"
     };
+        /// <summary>
+        /// List of all T-SQL comparison operators to aid in programmatic query creation and parsing.
+        /// </summary>
         public static List<string> Comparison_Operators_TSQL = new List<string>() {
         "=",
         ">",
@@ -562,11 +586,14 @@ namespace MultiToolExtensions
         "<>"
     };
     }
+    /// <summary>
+    /// Dictionaries and Lists of Microsoft Access Database specific reserved words,
+    /// object attributes, as well as some VBA built-in functions.
+    /// </summary>
     public static class MSAccessDefinitions
     {
         /// <summary>
-        /// Dictionaries and Lists of specifically Microsoft Access Database reserved words,
-        /// object attributes, and some VB built-in functions.
+        /// List of all parameters found in MS Access Form objects, such as textboxes, labels, etc to aid in code parsing.
         /// </summary>
         public static List<string> PrimaryObjectParameters { get; set; } = new List<string>() {
             "Name",
@@ -597,6 +624,9 @@ namespace MultiToolExtensions
             "Caption",
             "BorderStyle"
         };
+        /// <summary>
+        /// List of all DoCmds in MS Access VBA scripting to aid in code parsing.
+        /// </summary>
         public static List<string> DoCmd = new List<string>() {
             "AddMenu",
             "ApplyFilter",
@@ -665,6 +695,9 @@ namespace MultiToolExtensions
             "TransferSQLDatabase",
             "TransferText"
             };
+        /// <summary>
+        /// List of all Events in MS Access VBA scripting to aid in code parsing.
+        /// </summary>
         public static List<string> EventList = new List<string>() {
             "OnClick",
             "OnClickEmMacro",
@@ -695,6 +728,9 @@ namespace MultiToolExtensions
             "OnExit",
             "OnExitEmMacro"
         };
+        /// <summary>
+        /// Lookup Dictionary for normalizing MS Access Form object border styles to aid in object parsing.
+        /// </summary>
         public static Dictionary<int, string> BorderStyles = new Dictionary<int, string>()
         {
             {0, "hidden" },
@@ -707,6 +743,9 @@ namespace MultiToolExtensions
             {7, "dashed dotted dotted" },
             {8, "double" }
         };
+        /// <summary>
+        /// Lookup Dictionary for normalizing MS Access Form section names to aid in Form parsing.
+        /// </summary>
         public static Dictionary<int, string> SectionNames = new Dictionary<int, string>()
         {
             { 0, "acDetail" },
@@ -715,6 +754,9 @@ namespace MultiToolExtensions
             { 3, "acPageHeader" },
             { 4, "acPageFooter" }
         };
+        /// <summary>
+        /// Lookup Dictionary for normalizing MS Access Form Form object types to aid in Form parsing.
+        /// </summary>
         public static Dictionary<int, string> ControlTypes = new Dictionary<int, string>()
         {
             {100, "acLabel"},
@@ -742,7 +784,11 @@ namespace MultiToolExtensions
             {129, "acNavigationControl"},
             {130, "acNavigationButton"}
         };
-        public static Dictionary<int, string> ColumnTypes = new Dictionary<int, string>() //http://allenbrowne.com/ser-49.html
+        /// <summary>
+        /// Lookup Dictionary for normalizing MS Access table column types to aid in schema parsing.
+        /// Please refer to source for additional information: http://allenbrowne.com/ser-49.html
+        /// </summary>
+        public static Dictionary<int, string> ColumnTypes = new Dictionary<int, string>()
         {
             {1, "bit" },                // dbBoolean
             {2, "binary" },             // dbByte

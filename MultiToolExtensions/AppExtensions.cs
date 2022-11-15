@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
@@ -100,7 +99,7 @@ namespace MultiToolExtensions
         public static List<int> AllIndexesOf(this string str, string value)
         {
             if (String.IsNullOrEmpty(value))
-                throw new ArgumentException("the string to find may not be empty", "value");
+                throw new ArgumentException("The string to find must not be empty", "value");
             List<int> indexes = new List<int>();
             for (int index = 0; ; index += value.Length)
             {
@@ -1591,7 +1590,6 @@ namespace MultiToolExtensions
             long number = 0;
             return long.TryParse(object_value, out number);
         }
-        
         public static bool isValidUSState(this string object_value)
         {
             if (_US_States.Keys.Contains(object_value) || _US_States.Values.Contains(object_value))
@@ -1635,7 +1633,7 @@ namespace MultiToolExtensions
 
         }
         /// <summary>
-        /// Calculates the Levenshtein Distance score of the string pbject value and the given string parameter.
+        /// Calculates the Levenshtein Distance score of the string object value and the given string parameter.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         /// <param name="t">[Required] The comparison string.</param>
@@ -1711,6 +1709,10 @@ namespace MultiToolExtensions
 
             return matrix[bounds.Height - 1, bounds.Width - 1];
         }
+        /// <summary>
+        /// Returns the string representation of the RangeTuple.
+        /// </summary>
+        /// <param name="object_value">[Required] The calling object.</param>
         public static string Print(this RangeTuple object_value)
         {
             return string.Format("({0},{1})", object_value.Start, object_value.End);
@@ -1719,6 +1721,12 @@ namespace MultiToolExtensions
         {
             return new List<int>() { object_value.Start, object_value.End };
         }
+        /// <summary>
+        /// Slices the given string matching the RangeTuple Start and End values. If string is shorter than the length
+        /// of the RangeTuple, slice will be from RangeTuple.Start to the end of the given string.
+        /// </summary>
+        /// <param name="object_value">[Required] The calling object.</param>
+        /// <param name="string_value">[Required] The string to slice.</param>
         public static string Substring(this RangeTuple object_value, string string_value)
         {
             if(object_value.Length > 0 && string_value.Length > 0)
@@ -1747,6 +1755,8 @@ namespace MultiToolExtensions
         /// Slices the given array matching the RangeTuple Start and End values. If array is shorter than the length
         /// of the RangeTuple, slice will be from RangeTuple.Start to the end of the given array.
         /// </summary>
+        /// <param name="object_value">[Required] The calling object.</param>
+        /// <param name="array_value">[Required] The array to slice.</param>         
         public static string[] ArraySlice<String>(this RangeTuple object_value, string[] array_value)
         {
             if(object_value.Length > 0 && array_value.Length > 0)
@@ -1772,9 +1782,11 @@ namespace MultiToolExtensions
             }
         }
         /// <summary>
-        /// Slices the given list matching the RangeTuple Start and End values. If array is shorter than the length
-        /// of the RangeTuple, slice will be from RangeTuple.Start to the end of the given array.
+        /// Slices the given list matching the RangeTuple Start and End values. If list is shorter than the length
+        /// of the RangeTuple, slice will be from RangeTuple.Start to the end of the given list.
         /// </summary>
+        /// <param name="object_value">[Required] The calling object.</param>
+        /// <param name="list_value">[Required] The list to slice.</param>
         public static List<dynamic> ListSlice(this RangeTuple object_value, List<dynamic> list_value)
         {
             if (object_value.Length > 0 && list_value.Count > 0)
@@ -1801,32 +1813,5 @@ namespace MultiToolExtensions
             }
         }
     }
-    /// <summary>
-    /// A basic tuple specifically for handling integer ranges.
-    /// </summary>
-    public struct RangeTuple
-    {
-        public int Start { get; set; }
-        private int _end { get; set; }
-        public int End { get{ return _end; } set{ _end = _validate(Start, End); } }
-        public int Length { get { return (End - Start); } }
-        private static int _validate(int start, int end)
-        {
-            if (start < end)
-            {
-                return end;
-            } else
-            {
-                throw new ArgumentException("RangeTuple.End cannot be less than RangeTuple.Start", nameof(end));
-            }
-        }
-        public static RangeTuple Parse(string point_str)
-        {
-            RangeTuple point = new RangeTuple();
-            point.Start = int.Parse(point_str.Split(',')[0].Replace("(", ""));
-            point.End = int.Parse(point_str.Split(',')[1].Replace(")", ""));
-            return point;
-        }
 
-    }
 }
