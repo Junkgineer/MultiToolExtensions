@@ -20,9 +20,8 @@ You can include these into your project via the following methods:
 - ~~NuGet Package (supplied)~~ (Coming soon)
 - ~~Windows DLL (supplied)~~ (Coming soon)
 - Add the files to your project folder.
-
-## NullTests
 ---
+## **NullTests**
 The `isNull()` extension is available on the following types:
 - `string`
 - `int`
@@ -75,8 +74,9 @@ Console.WriteLine(val2);
 // Prints:
 // val1 is NOT null or default
 ```
-## Geography
 ---
+## **Geography**
+
 Provides functionality for easily abbreviating a handful of County, State, and Country level geographic locations. The following functions and locations are included:
 | Location | Function | ISO|
 | -----------|-------------|-------|
@@ -160,8 +160,9 @@ if (state_abbrev.isValidUSState()) {
 // Prints:
 // ISO2 abbreviation is correct
 ```
-## URNFormatting
 ---
+## **URNFormatting**
+
 In order to more efficiently parse out or create formatted database URN addresses programmatically, the following methods are included:
 
 | Method  |Description|Input String Example| Return Type
@@ -208,28 +209,29 @@ Console.WriteLine("The formatted URN is: " + urn);
 // Prints:
 // The formatted URN is: [fooSchema].[barTable].[someColumn]
 ```
-## **RangeTuple**
 ---
+## **RangeTuple**
+
 Coming soon.
 ### **Code Examples:**
 ---
 ## **Definitions**
----
+
 Coming soon.
 ### **Code Examples:**
 ---
 ## **SQLDefinitions**
----
+
 Coming soon.
 ### **Code Examples:**
 ---
 ## **MSAccessDefinitions**
----
+
 Coming soon.
 ### **Code Examples:**
 ---
 ## **MiscExtensions**
----
+
 Coming soon.
 ### **Code Examples:**
 ---
