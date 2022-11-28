@@ -21,7 +21,7 @@ You can include these into your project via the following methods:
 - ~~Windows DLL (supplied)~~ (Coming soon)
 - Add the files to your project folder.
 
-## **NullTests**
+## NullTests
 ---
 The `isNull()` extension is available on the following types:
 - `string`
