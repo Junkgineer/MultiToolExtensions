@@ -75,7 +75,7 @@ Console.WriteLine(val2);
 // Prints:
 // val1 is NOT null or default
 ```
-## **Geography**
+## Geography
 ---
 Provides functionality for easily abbreviating a handful of County, State, and Country level geographic locations. The following functions and locations are included:
 | Location | Function | ISO|
@@ -104,7 +104,7 @@ Lastly, there are checks for validating that a State abbreviation is correct. Cu
 |-----|--------|-------------------------
 | [2] Character| `isValidUSState()`|`Boolean`
 
-### Code Examples:
+### **Code Examples:**
 ---
 >Abbreviating a **State**, **Commonwealth State**, **Province**, or **County** (`abbrevCanadianProvince()`, `abbrevUKCounty()`, `abbrevUKCountry()` and `abbrevMexicanState()`):
 ```c#
@@ -160,7 +160,7 @@ if (state_abbrev.isValidUSState()) {
 // Prints:
 // ISO2 abbreviation is correct
 ```
-## **URNFormatting**
+## URNFormatting
 ---
 In order to more efficiently parse out or create formatted database URN addresses programmatically, the following methods are included:
 
