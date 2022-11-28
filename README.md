@@ -29,6 +29,7 @@ The `isNull()` extension is available on the following types:
 - `object`
 
 The method is particularly useful for testing for `DBNull` and uninstantiated instances of `DateTime`, both of which would throw an exception if not specifically handled otherwise.
+
 ---
 ### **Code Examples:**
 
@@ -174,6 +175,7 @@ In order to more efficiently parse out or create formatted database URN addresse
 | `ToFullURN(string, string)`| Format valid **URN**| `someColumn`, (`[barTable]`, `fooSchema`)|`string`
 
 In the cases above, `URNToList()` would return a list value of `["fooSchema", "barTable", "someColumn"]`, while all three `ToFullURN()` methods would return a `string` value of `[fooSchema].[barTable].[someColumn]`.
+
 ---
 ### **Code Examples:**
 >Properly format a URN string containing a schema, table, and column name. Brackets in the input string are ignored and optional:
