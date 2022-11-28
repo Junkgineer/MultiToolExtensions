@@ -6,8 +6,8 @@ This is a pile of custom tools I regularly use, including:
 - Single line string dump to file.
 - Filename cleaning.
 - A multitude of county, state and country ISO abbreviations.
-- Social Security Number locator and sanitizer.
-- Quick single line LevenshteinDistance and DamerauLevenshteinDistance comparisons.
+- Social Security Number locator and sanitizer using RegEx.
+- Quick, single line Levenshtein Distance and Damerau-Levenshtein Distance comparisons.
 - `RangeTuple` struct for handling more complex range calculations in strings, lists, etc.
 - Random `Color` generator.
-- Quick single line string index searches.
+- Quick, single line string index searches.
