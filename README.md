@@ -5,7 +5,7 @@ Coming soon.
 This is a collection of custom tools I regularly use. They are seperated into 6 different classes for ease of use.
 | Class Name | Description |
 | -----------|-------------|
-| `NullTests` | More expansive checks for different types of `NULL` and `default`.|
+| `NullTests` | More expansive checks for different types of `null`, `DBNull`, and `default`.|
 | `Geography` | A multitude of county, state and country ISO abbreviations.|
 | `URNFormatting` | Database object URN string parsing and creation.|
 | `RangeTuple` | Struct for handling more complex range calculations in strings, lists, etc.|
@@ -23,13 +23,14 @@ You can include these into your project via the following methods:
 
 ## **NullTests**
 ---
-The `isNull()` extension is available for testing the following types:
+The `isNull()` extension is available on the following types:
 - `string`
 - `int`
 - `DateTime`
 - `object`
 
-### Examples:
+The method is particularly useful for testing for `DBNull` and uninstantiated instances of `DateTime`, both of which would throw an exception if not specifically handled otherwise.
+### **Code Examples:**
 ---
 >Standard `Boolean` check for `null` or `default` value on a `DateTime`:
 ```c#
@@ -184,7 +185,7 @@ Console.WriteLine("The formatted URN is: " + formatted_urn);
 // Prints:
 // The formatted URN is: [fooSchema].[barTable].[someColumn]
 ```
->Properly format a URN string containing a table, and column name, while passing the schema name as a parameter. Brackets in any of the input strings are ignored and optional:
+>Properly format a URN string containing a table and column name, while passing the schema name as a parameter. Brackets in any of the input strings are ignored and optional:
 ```c#
 using MultiToolExtensions;
 
