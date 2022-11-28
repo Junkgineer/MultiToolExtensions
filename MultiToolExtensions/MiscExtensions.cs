@@ -9,7 +9,10 @@ using System.Drawing;
 
 namespace MultiToolExtensions
 {
-    public static class Misc
+    /// <summary>
+    /// A collection of uncategorized, misc tools.
+    /// </summary>
+    public static class MiscExtensions
     {
         /// <summary>
         /// Returns a random color with an alpha of 255

@@ -93,7 +93,7 @@ namespace MultiToolExtensions
             return object_value;
         }
         /// <summary>
-        /// Returns true if the object has a value of 0. I don't care if the rest of the null checks on an int are useless...it's going to do it anyway.
+        /// Returns true if the object has a value of 0.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         /// <param name="true_value">[Optional] The string object to return if the calling string object is null.</param>
@@ -145,8 +145,7 @@ namespace MultiToolExtensions
 
         }
         /// <summary>
-        /// Returns true if the object has a value of 0, or the false_value if it is not 0. 
-        /// I don't care if the rest of the null checks on an int are useless...it's going to do it anyway.
+        /// Returns true if the object has a value of 0, or the false_value if it is not 0.
         /// </summary>
         /// <param name="object_value">[Required] The calling object.</param>
         /// <param name="true_value">[Optional] The string object to return if the calling string object is null.</param>

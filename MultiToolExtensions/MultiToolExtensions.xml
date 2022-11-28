@@ -1,0 +1,398 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MultiToolExtensions</name>
+    </assembly>
+    <members>
+        <member name="T:MultiToolExtensions.Definitions">
+            <summary>
+            A static class containing various dictionaries to aid in standardizing character 
+            subsitution and other misc tasks.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.Definitions.SpecialCharSubstitutions">
+            <summary>
+            A standardized set of file-safe replacements for special characters commonly found in Microsoft Access Database queries, table and column names.
+            </summary>
+        </member>
+        <member name="T:MultiToolExtensions.SQLDefinitions">
+            <summary>
+            Dictionaries and Lists of ODBC and T-SQL specific reserved words and operators. 
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.SQLDefinitions.Easy_Clean">
+            <summary>
+            Find and Replace based Dictionary for changing the common MS Access query syntax to valid T-SQL.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.SQLDefinitions.PrimaryQueryTypes">
+            <summary>
+            List of primary query types to aid in query classification during parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.SQLDefinitions.Reserved_ODBC">
+            <summary>
+            List of all ODBC reserved words to aid in programmatic query creation and parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.SQLDefinitions.Reserved_TSQL">
+            <summary>
+            List of all T-SQL reserved words to aid in programmatic query creation and parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.SQLDefinitions.Functions_TSQL">
+            <summary>
+            List of all T-SQL functions to aid in programmatic query creation and parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.SQLDefinitions.Joins_TSQL">
+            <summary>
+            List of all T-SQL JOINs to aid in programmatic query creation and parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.SQLDefinitions.Logical_Operators_TSQL">
+            <summary>
+            List of all T-SQL logical operators to aid in programmatic query creation and parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.SQLDefinitions.Comparison_Operators_TSQL">
+            <summary>
+            List of all T-SQL comparison operators to aid in programmatic query creation and parsing.
+            </summary>
+        </member>
+        <member name="T:MultiToolExtensions.MSAccessDefinitions">
+            <summary>
+            Dictionaries and Lists of Microsoft Access Database specific reserved words,
+            object attributes, as well as some VBA built-in functions.
+            </summary>
+        </member>
+        <member name="P:MultiToolExtensions.MSAccessDefinitions.PrimaryObjectParameters">
+            <summary>
+            List of all parameters found in MS Access Form objects, such as textboxes, labels, etc to aid in code parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.MSAccessDefinitions.DoCmd">
+            <summary>
+            List of all DoCmds in MS Access VBA scripting to aid in code parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.MSAccessDefinitions.EventList">
+            <summary>
+            List of all Events in MS Access VBA scripting to aid in code parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.MSAccessDefinitions.BorderStyles">
+            <summary>
+            Lookup Dictionary for normalizing MS Access Form object border styles to aid in object parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.MSAccessDefinitions.SectionNames">
+            <summary>
+            Lookup Dictionary for normalizing MS Access Form section names to aid in Form parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.MSAccessDefinitions.ControlTypes">
+            <summary>
+            Lookup Dictionary for normalizing MS Access Form Form object types to aid in Form parsing.
+            </summary>
+        </member>
+        <member name="F:MultiToolExtensions.MSAccessDefinitions.ColumnTypes">
+            <summary>
+            Lookup Dictionary for normalizing MS Access table column types to aid in schema parsing.
+            Please refer to source for additional information: http://allenbrowne.com/ser-49.html
+            </summary>
+        </member>
+        <member name="M:MultiToolExtensions.Geography.abbrevUSState(System.String)">
+            <summary>
+            Returns the 2 character abbreviation for the object value if it's a valid US State, or the original value if it is not. The original object
+            value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.Geography.abbrevCanadianProvince(System.String)">
+            <summary>
+            Returns the 2 character abbreviation for the object value if it's a valid Canadian Province, or the original value if it is not. The original object
+            value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.Geography.abbrevUKCounty(System.String)">
+            <summary>
+            Returns the 3 character abbreviation for the object value if it's a valid UK County, or the original value if it is not. The original object
+            value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.Geography.abbrevCountryISO2(System.String)">
+            <summary>
+            Returns the 2 character ISO abbreviation for the object value if it's a valid Country, or the original value if it is not. The original object
+            value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.Geography.abbrevCountryISO3(System.String)">
+            <summary>
+            Returns the 3 character ISO abbreviation for the object value if it's a valid Country, or the original value if it is not. The original object
+            value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.Geography.abbrevUKCountry(System.String)">
+            <summary>
+            Returns the 3 character abbreviation for the object value if it's a valid UK Country, or the original value if it is not. The original object
+            value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.Geography.abbrevMexicanState(System.String)">
+            <summary>
+            Returns the 2 character abbreviation for the object value if it's a valid Mexican State, or the original value if it is not. The original object
+            value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.Geography.abbrevStateByCountry(System.String,System.String)">
+            <summary>
+            Returns the 2 character abbreviation for the object value if it's a valid State of the given Country, or the original value if it is not. The original object
+            value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="country">[Required] The country the calling object (state) is in.</param>
+        </member>
+        <member name="M:MultiToolExtensions.Geography.isValidOKCounty(System.String)">
+            <summary>
+            Checks to see if string object value is a valid name of an Oklahoma County.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="T:MultiToolExtensions.MiscExtensions">
+            <summary>
+            A collection of uncategorized, misc tools.
+            </summary>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.RandomColor(System.Drawing.Color)">
+            <summary>
+            Returns a random color with an alpha of 255
+            </summary>
+            <param name="object_value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.RandomColor(System.Drawing.Color,System.Byte)">
+            <summary>
+            Returns a random color with the given alpha value
+            </summary>
+            <param name="object_value"></param>
+            <param name="alpha"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.SaveAppConfigSetting(System.String,System.String)">
+            <summary>
+            Updates the value of the given key in the appSettings section of the project App.config to the value of the string.
+            </summary>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.WriteToFile(System.String,System.String,System.Boolean,System.String,System.Boolean)">
+            <summary>
+            Writes the contents of the string to a text file at the given path.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="path">[Required] The path of the file to write to.</param>
+            <param name="append">[Optional] If true, will append to the file instead of overwriting it.</param>
+            <param name="sender">[Optional] If given, will add the string to the linestamps.</param>
+            <param name="linestamps">[Optional] If true, will prepend timestamps and optionally sender to each line written.</param>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.AllIndexesOf(System.String,System.String)">
+            <summary>
+            Returns a list of indexes in the string where [value] is located.
+            </summary>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.CleanFileName(System.String)">
+            <summary>
+            Removes unsafe characters that are commonly used as spaces (or spaces themselves)
+            and replaces them with underscores.
+            </summary>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.toStringList(System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Converts a List/<string/> object to a string using the given delimiter.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="delimiter">[Optional] The delimiter to use (defaults to a comma).</param>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.SanitizeSSN(System.String)">
+            <summary>
+            Replaces any text in the string that appears to be a valid SSN with "xxx-xx-xxxx".
+            WARNING: This is NOT to be a considered an absolute 'fail safe' sanitizer for PII, and will
+            also treat strings with a similar structure as an SSN. Use discretion!
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.ProperNoun(System.String)">
+            <summary>
+            Capitalizes the first letter of the given string object value.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.LevenshteinDistance(System.String,System.String)">
+            <summary>
+            Calculates the Levenshtein Distance score of the string object value and the given string parameter.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="t">[Required] The comparison string.</param>
+        </member>
+        <member name="M:MultiToolExtensions.MiscExtensions.DamerauLevenshteinDistance(System.String,System.String)">
+            <summary>
+            Calculates the Levenshtein Distance score of the string object value and the given string parameter with the inclusion of transpositions.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="t">[Required] The comparison string.</param>
+        </member>
+        <member name="T:MultiToolExtensions.NullTests">
+            <summary>
+            Contains Type extensions for many standard objects to allow for "fuzzier" null tests. Some examples of tests it performs are
+            default(object), object_value = null, object_value.GetType() = null, (int)0, (String)"", and most importantly, typeof(System.DBNull).
+            Each object type extension is tailored to work specifically for the quirks of that type; for instance, standard testing of DateTime
+            can throw an exception if done incorrectly. These tests are all safe, and allows the same method to be used across all types.
+            </summary>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.Int32)">
+            <summary>
+            Returns true if the object has a value of 0. Checks for other nulls that it can never be as well...just because.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.Object)">
+            <summary>
+            Returns true if the object is null, the objects' default value, or System.DBNull.
+            The original object value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.String)">
+            <summary>
+            Returns true if the string object is null, the string default value, an empty string, or System.DBNull.
+            The original object value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.DateTime)">
+            <summary>
+            Returns true if the DateTime object is default(DateTime).
+            The original object value is overwritten.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.Object,System.Object)">
+            <summary>
+            Returns true_value parameter object if the calling object is null, the objects' default value, or System.DBNull.
+            The object value will be retained if its value is not null. If true, the original object value is overwritten by the given parameter value.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="true_value">[Optional] The object to return if the calling object is null.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.String,System.String)">
+            <summary>
+            Returns true_value parameter string if the calling object is null, the string default value, an empty string or DBNull,
+            The object value will be retained if its value is not null. If true, the original object value is overwritten by the given parameter value.
+            </summary>
+            <param name="object_value">[Required] The calling string object.</param>
+            <param name="true_value">[Optional] The string object to return if the calling string object is null.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.Int32,System.Int32)">
+            <summary>
+            Returns true if the object has a value of 0.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="true_value">[Optional] The string object to return if the calling string object is null.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.Object,System.Object,System.Object)">
+            <summary>
+            Returns the true_value parameter object if the object is null, the objects' default value, an empty string or System.DBNull, 
+            or the false_value if it is not any of these. The original object value is overwritten by the given parameter value.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="true_value">[Optional] The object to return if the calling object is null.</param>
+            <param name="false_value">[Optional] The object to return if the calling object is not null.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.String,System.String,System.String)">
+            <summary>
+            Returns the true_value parameter string if the string object is null, the string default value, an empty string or DBNull, 
+            or the false_value if it is not any of these. The original object value is overwritten by the given parameter value.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="true_value">[Optional] The object to return if the calling object is null.</param>
+            <param name="false_value">[Optional] The object to return if the calling object is not null.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns true if the object has a value of 0, or the false_value if it is not 0.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="true_value">[Optional] The string object to return if the calling string object is null.</param>
+            <param name="false_value">[Optional] The object to return if the calling object is not null.</param>
+        </member>
+        <member name="M:MultiToolExtensions.NullTests.isNull(System.DateTime,System.DateTime,System.DateTime)">
+            <summary>
+            Returns the true_value parameter string if the DateTime object is default(DateTime), 
+            or the false_value if it is not. The original object value is overwritten by the given parameter value.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="true_value">[Optional] The object to return if the calling object is default(DateTime).</param>
+            <param name="false_value">[Optional] The object to return if the calling object is not default(DateTime).</param>
+        </member>
+        <member name="T:MultiToolExtensions.RangeTuple">
+            <summary>
+            A basic tuple specifically for handling integer ranges.
+            </summary>
+        </member>
+        <member name="T:MultiToolExtensions.RangeTupleExtensions">
+            <summary>
+            RangeTuple Type extensions.
+            </summary>
+        </member>
+        <member name="M:MultiToolExtensions.RangeTupleExtensions.Parse(System.String)">
+            <summary>
+            Parses a RangeTuple out of the given string.
+            </summary>
+            <param name="point_str">The point_str.</param>
+            <returns>A RangeTuple.</returns>
+        </member>
+        <member name="M:MultiToolExtensions.RangeTupleExtensions.Print(MultiToolExtensions.RangeTuple)">
+            <summary>
+            Returns the string representation of the RangeTuple.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.RangeTupleExtensions.ToList(MultiToolExtensions.RangeTuple)" -->
+        <member name="M:MultiToolExtensions.RangeTupleExtensions.Substring(MultiToolExtensions.RangeTuple,System.String)">
+            <summary>
+            Slices the given string matching the RangeTuple Start and End values. If string is shorter than the length
+            of the RangeTuple, slice will be from RangeTuple.Start to the end of the given string.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="string_value">[Required] The string to slice.</param>
+        </member>
+        <member name="M:MultiToolExtensions.RangeTupleExtensions.ArraySlice``1(MultiToolExtensions.RangeTuple,System.String[])">
+            <summary>
+            Slices the given array matching the RangeTuple Start and End values. If array is shorter than the length
+            of the RangeTuple, slice will be from RangeTuple.Start to the end of the given array.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="array_value">[Required] The array to slice.</param>         
+        </member>
+        <member name="M:MultiToolExtensions.RangeTupleExtensions.ListSlice(MultiToolExtensions.RangeTuple,System.Collections.Generic.List{System.Object})">
+            <summary>
+            Slices the given list matching the RangeTuple Start and End values. If list is shorter than the length
+            of the RangeTuple, slice will be from RangeTuple.Start to the end of the given list.
+            </summary>
+            <param name="object_value">[Required] The calling object.</param>
+            <param name="list_value">[Required] The list to slice.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.URNToList(System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToFullURN(System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToFullURN(System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToFullURN(System.String,System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToTableURN(System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToTableURN(System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.BreakoutURN(System.String)" -->
+    </members>
+</doc>

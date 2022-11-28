@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.14</Version>
+    <Version>2.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>MultiToolExtensions</PackageId>
     <Authors>Jake Meyer</Authors>
@@ -15,8 +15,8 @@
 - Country, state and county validation and abbreviation for USA, Canada, Mexico, and Great Britain
 - SSN string locator
 - RangeTuple struct</Description>
-    <AssemblyVersion>1.0.14.0</AssemblyVersion>
-    <FileVersion>1.0.14.0</FileVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
     <PackageReleaseNotes>Created seperate lib for SQL tools, and removed it from this one.</PackageReleaseNotes>
     <AssemblyName>MultiToolExtensions</AssemblyName>
     <RootNamespace>MultiToolExtensions</RootNamespace>

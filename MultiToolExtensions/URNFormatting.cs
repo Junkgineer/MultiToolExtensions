@@ -8,11 +8,24 @@ namespace MultiToolExtensions
     public static class URNFormatting
     {
         /// <summary>
-        /// Takes any length URN and converts it to an unbracketed <code>List<string></code>.
+        /// Splits a database URN string into a list, with each value properly bracketed.
         /// </summary>
-        public static List<string> URNToList(this string fullurn)
+        /// <code>
+        /// string database_column_address = "[fooSchema].[barTable].[somecolumn]";
+        /// List<string> URN_List = database_column_address.URNToList();
+        /// foreach(string item in URN_List)
+        /// {
+        ///     Console.WriteLine(item);
+        /// }
+        /// //Output:
+        /// // fooSchema
+        /// // barTable
+        /// // somecolumn
+        /// </code>
+        /// <param name="full_urn">[Required] The calling object.</param>
+        public static List<string> URNToList(this string full_urn)
         {
-            List<string> rawurn = fullurn.Split(new string[] { "].[" }, StringSplitOptions.None).ToList<string>();
+            List<string> rawurn = full_urn.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
             List<string> urn = new List<string>();
             for (int i = 0; i <= rawurn.Count - 1; i++)
             {
@@ -23,263 +36,149 @@ namespace MultiToolExtensions
             return urn;
         }
         /// <summary>
-        /// Splits a database URN string into a list, with each value properly bracketed.
+        /// Takes a basic schema, table, and column URN string, and adds proper bracketed formatting.
         /// </summary>
         /// <example>
         /// <code>
-        /// string database_column_address = "fooSchema.barTable.somecolumn";
-        /// List<string> Column_Address = database_column_address.ToFullURN();
-        /// foreach(string item in Column_Address)
-        /// {
-        ///     Console.WriteLine(item);
-        /// }
+        /// string schema_table_column = "fooSchema.barTable.someColumn";
+        /// string Column_Address = schema_table_column.ToFullURN("fooSchema");
+        /// Console.WriteLine(Column_Address);
         /// //Output:
-        /// // [fooSchema]
-        /// // [barTable]
-        /// // [somecolumn]
+        /// // [fooSchema].[barTable].[someColumn]
         /// </code>
         /// </example>
-        /// <param name="column_table_database">[Required] The calling object.</param>
-        public static string ToFullURN(this string column_table_database)
+        /// <param name="urn">[Required] The calling string object.</param>
+        public static string ToFullURN(this string urn)
         {
-            List<string> rawurn = column_table_database.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
-            string database = rawurn[0];
-            string table = rawurn[1];
-            string column = rawurn[2];
-            if (!column.Contains("["))
+            urn = urn.Replace("[", "").Replace("]", "");
+            List<string> rawurn = urn.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
+
+            string database = "";
+            string schema = "";
+            string table = "";
+            string column = "";
+
+            if (rawurn.Count == 2)
             {
-                column = string.Format("[{0}", column);
+                table = rawurn[0];
+                column = rawurn[1];
+                urn = string.Format("[{0}].[{1}]", table, column);
+            } else if (rawurn.Count == 3)
+            {
+                schema = rawurn[0];
+                table = rawurn[1];
+                column = rawurn[2];
+                urn = string.Format("[{0}].[{1}].[{2}]", schema, table, column);
             }
-            if (!column.Contains("]"))
+            else if (rawurn.Count == 4)
             {
-                column = string.Format("{0}]", column);
+                database = rawurn[0];
+                schema = rawurn[1];
+                table = rawurn[2];
+                column = rawurn[3];
+                urn = string.Format("[{0}].[{1}].[{2}].[{3}]", database, schema, table, column);
+            } else
+            {
+                urn = string.Format("[{0}]", urn);
             }
 
-            if (!table.Contains("["))
-            {
-                table = string.Format("[{0}", table);
-            }
-            if (!table.Contains("]"))
-            {
-                table = string.Format("{0}]", table);
-            }
-
-            if (!database.Contains("["))
-            {
-                database = string.Format("[{0}", database);
-            }
-            if (!database.Contains("]"))
-            {
-                database = string.Format("{0}]", database);
-            }
-            string urn = string.Format("{0}.{1}.{2}", database, table, column);
             return urn;
         }
         /// <summary>
-        /// Takes a basic column and table URN, and prepends it with the given database/schema name.
+        /// Takes a basic schema, table, and column URN string, and adds proper bracketed formatting.
         /// </summary>
         /// <example>
         /// <code>
-        /// string column_table = "barTable.someColumn";
-        /// List<string> Column_Address = database_column_address.ToFullURN("fooSchema");
-        /// foreach(string item in Column_Address)
-        /// {
-        ///     Console.WriteLine(item);
-        /// }
+        /// string table_column = "barTable.someColumn";
+        /// string full_address = table_column.ToFullURN("fooSchema");
+        /// Console.WriteLine(full_address);
         /// //Output:
-        /// // [fooSchema]
-        /// // [barTable]
-        /// // [someColumn]
+        /// // [fooSchema].[barTable].[someColumn]
         /// </code>
         /// </example>
-        /// <param name="column_table">[Required] The calling object.</param>
-        /// <param name="database">[Required] The database/schema name to prepend to the string.</param>
-        public static string ToFullURN(this string column_table, string database)
+        /// <param name="table_column">[Required] The calling string object.</param>
+        /// <param name="schema">[Required] The database/schema name to prepend to the string.</param>
+        public static string ToFullURN(this string table_column, string schema)
         {
-            List<string> rawurn = column_table.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
-            string table = rawurn[0];
-            string column = rawurn[1];
-            if (!column.Contains("["))
-            {
-                column = string.Format("[{0}", column);
-            }
-            if (!column.Contains("]"))
-            {
-                column = string.Format("{0}]", column);
-            }
+            table_column = table_column.Replace("[", "").Replace("]", "");
+            schema = schema.Replace("[", "").Replace("]", "");
+            List<string> rawurn = table_column.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
 
-            if (!table.Contains("["))
-            {
-                table = string.Format("[{0}", table);
-            }
-            if (!table.Contains("]"))
-            {
-                table = string.Format("{0}]", table);
-            }
+            string database = "";
+            string table = "";
+            string column = "";
 
-            if (!database.Contains("["))
+            if (rawurn.Count == 2)
             {
-                database = string.Format("[{0}", database);
+                table = rawurn[0];
+                column = rawurn[1];
+                table_column = string.Format("[{0}].[{1}]", table, column);
             }
-            if (!database.Contains("]"))
+            else if (rawurn.Count == 3)
             {
-                database = string.Format("{0}]", database);
+                // Ignores whatever is at index 0 in favor of the schema parameter.
+                table = rawurn[1];
+                column = rawurn[2];
+                table_column = string.Format("[{0}].[{1}].[{2}]", schema, table, column);
             }
-            string urn = string.Format("{0}.{1}.{2}", database, table, column);
-            return urn;
+            else if (rawurn.Count == 4)
+            {
+                // Ignores indexes 0 and 1, and uses the schema parameter.
+                table = rawurn[2];
+                column = rawurn[3];
+                table_column = string.Format("[{0}].[{1}].[{2}]", schema, table, column);
+            }
+            else
+            {
+                // Simply tacks the schema parameter value in front of the string value.
+                table_column = string.Format("[{0}].[{1}]", schema, table_column);
+            }
+            return table_column;
         }
         /// <summary>
-        /// Takes a column name, and prepends it with the bracketed given table and bracketed database/schema name.
+        /// Takes a basic schema, table, and column URN string, and adds proper bracketed formatting.
         /// </summary>
         /// <example>
         /// <code>
-        /// string column_table = "someColumn";
-        /// List<string> Column_Address = database_column_address.ToFullURN("barTable", "fooSchema");
-        /// foreach(string item in Column_Address)
-        /// {
-        ///     Console.WriteLine(item);
-        /// }
+        /// string column = "someColumn";
+        /// string full_address = table_column.ToFullURN("fooSchema", "barTable");
+        /// Console.WriteLine(full_address);
         /// //Output:
-        /// // [fooSchema]
-        /// // [barTable]
-        /// // [someColumn]
+        /// // [fooSchema].[barTable].[someColumn]
         /// </code>
         /// </example>
         /// <param name="column">[Required] The calling object.</param>
         /// <param name="table">[Required] The database/schema name to prepend to the string.</param>
-        /// <param name="database">[Required] The database/schema name to prepend to the string.</param>
-        public static string ToFullURN(this string column, string table, string database)
+        /// <param name="schema">[Required] The database/schema name to prepend to the string.</param>
+        public static string ToFullURN(this string column, string table, string schema)
         {
-            if (!column.Contains("["))
-            {
-                column = string.Format("[{0}", column);
-            }
-            if (!column.Contains("]"))
-            {
-                column = string.Format("{0}]", column);
-            }
+            column = column.Replace("[", "").Replace("]", "");
+            table = schema.Replace("[", "").Replace("]", "");
+            schema = schema.Replace("[", "").Replace("]", "");
+            List<string> rawurn = column.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
 
-            if (!table.Contains("["))
+            if (rawurn.Count == 1)
             {
-                table = string.Format("[{0}", table);
+                column = string.Format("[{0}].[{1}].[{2}]", schema, table, rawurn[0]);
             }
-            if (!table.Contains("]"))
+            else if (rawurn.Count == 2)
             {
-                table = string.Format("{0}]", table);
+                column = string.Format("[{0}].[{1}].[{2}]", schema, table, rawurn[1]);
             }
-
-            if (!database.Contains("["))
+            else if (rawurn.Count == 3)
             {
-                database = string.Format("[{0}", database);
+                column = string.Format("[{0}].[{1}].[{2}]", schema, table, rawurn[2]);
             }
-            if (!database.Contains("]"))
+            else if (rawurn.Count == 4)
             {
-                database = string.Format("{0}]", database);
+                column = string.Format("[{0}].[{1}].[{2}]", schema, table, rawurn[3]);
             }
-            string urn = string.Format("{0}.{1}.{2}", database, table, column);
-            return urn;
-        }
-        /// <summary>
-        /// Converts an SQL table URN string into a <code>List<string></code>,
-        /// If the object URN contains 2 or less items, the item at index 0 
-        /// will be considered the table name, and the given parent database will be prepended.
-        /// If the object URN contains 3 items, the item at index 1 will be considered the
-        /// table name, and the given parent database will be prepended. 
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// string table_urn_foo = "FooTable.BarColumn";
-        /// List<string> table_urn_bar = table_urn_foo.ToTableURN();
-        /// </code>
-        /// </example>
-        /// <example>
-        /// <code>
-        /// string table_urn_foo = "[SomeDB].[FooTable].[BarColumn]";
-        /// List<string> table_urn_bar = table_urn_foo.ToTableURN();
-        /// </code>
-        /// </example>
-        public static string ToTableURN(this string object_urn)
-        {
-            List<string> rawurn = object_urn.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
-            string urn = "";
-            if (rawurn.Count() == 2)
+            else
             {
-                urn = rawurn[0];
+                // Simply tacks the schema parameter value in front of the string value and hopes for the best.
+                column = string.Format("[{0}].[{1}]", schema, column);
             }
-            else if (rawurn.Count() == 3)
-            {
-                urn = string.Format("{0}{1}", rawurn[0], rawurn[1]);
-            }
-            return urn;
-        }
-        /// <summary>
-        /// Converts a SQL table URN string into a <code>List<string></code>,
-        /// and prepends the given parent database. If the object URN contains 2 or less
-        /// items, the item at index 0 will be considered the table name, and the given 
-        /// parent database will be prepended.
-        /// If the object URN contains 3 items, the item at index 1 will be considered the
-        /// table name, and the given parent database will be prepended. 
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// string table_urn_foo = "[FooTable].[BarColumn]";
-        /// List<string> table_urn_bar = table_urn_foo.ToTableURN("SomeDB");
-        /// </code>
-        /// </example>
-        /// <example>
-        /// <code>
-        /// string table_urn_foo = "[SomeDB].[FooTable].[BarColumn]";
-        /// List<string> table_urn_bar = table_urn_foo.ToTableURN("SomeOtherDB");
-        /// </code>
-        /// </example>
-        /// <example>
-        /// <code>
-        /// string table_urn_foo = "SomeDB.FooTable.BarColumn";
-        /// List<string> table_urn_bar = table_urn_foo.ToTableURN("SomeOtherDB");
-        /// </code>
-        /// </example> 
-        public static string ToTableURN(this string object_urn, string parentdatabase)
-        {
-            List<string> rawurn = object_urn.Split(new string[] { "." }, StringSplitOptions.None).ToList<string>();
-            string urn = "";
-            if (!parentdatabase.Contains("["))
-            {
-                parentdatabase = string.Format("[{0}", parentdatabase);
-            }
-            if (!parentdatabase.Contains("]"))
-            {
-                parentdatabase = string.Format("{0}]", parentdatabase);
-            }
-            if (rawurn.Count() <= 2)
-            {
-                urn = string.Format("{0}{1}", parentdatabase, rawurn[0]);
-            }
-            else if (rawurn.Count() == 3)
-            {
-                urn = string.Format("{0}{1}", parentdatabase, rawurn[1]);
-            }
-            return urn;
-        }
-        /// <summary>
-        /// Converts a full, bracketed, SQL URN string into a <code>List<string></code>
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// string urn_foo = "[SomeDB].[FooTable].[BarColumn]";
-        /// List<string> urn_bar = urn_foo.BreakoutURN();
-        /// </code>
-        /// </example>
-        public static List<string> BreakoutURN(this string fullurn)
-        {
-            List<string> rawurn = fullurn.Split(new string[] { "].[" }, StringSplitOptions.None).ToList<string>();
-            List<string> urn = new List<string>();
-            for (int i = 0; i <= rawurn.Count - 1; i++)
-            {
-                string item = rawurn[i].Replace("[", "");
-                item = item.Replace("]", "");
-                urn.Add(item.Trim());
-            }
-            return urn;
+            return column;
         }
     }
 }
