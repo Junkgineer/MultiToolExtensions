@@ -1,7 +1,8 @@
 # Table of Contents
 Coming soon.
-## Introduction
+
 ---
+## Introduction
 This is a collection of custom tools I regularly use. They are seperated into 6 different classes for ease of use.
 | Class Name | Description |
 | -----------|-------------|
