@@ -1,9 +1,18 @@
-# Table of Contents
-Coming soon.
+# **Table of Contents**
+* Introduction
+* Included Classes
+    * NullTests
+    * Geography
+    * URNFormatting
+    * RangeTuple
+    * Definitions
+    * SQLDefinitions
+    * MSAccessDefinitions
+    * MiscExtensions
 
 ---
-## Introduction
-This is a collection of custom tools I regularly use. They are seperated into 6 different classes for ease of use.
+## **Introduction**
+This is a collection of custom tools I regularly use in large scale text parsing and processing. Some are geared towards NLP, while others are for processing source code. I've seperated them into 6 different categorical classes for ease of use:
 | Class Name | Description |
 | -----------|-------------|
 | `NullTests` | More expansive checks for different types of `null`, `DBNull`, and `default`.|
@@ -15,7 +24,7 @@ This is a collection of custom tools I regularly use. They are seperated into 6 
 | `MSAccessDefinitions` | Dictionaries and Lists of Microsoft Access Database specific reserved words|
 | `MiscExtensions` | Misc tools, such as SSN RegEx searches, random color generator, etc.|
 
-## Installation
+## **Installation**
 ---
 You can include these into your project via the following methods:
 - ~~NuGet Package (supplied)~~ (Coming soon)
@@ -29,7 +38,7 @@ The `isNull()` extension is available on the following types:
 - `DateTime`
 - `object`
 
-The method is particularly useful for testing for `DBNull` and uninstantiated instances of `DateTime`, both of which would throw an exception if not specifically handled otherwise.
+The method is **particularly** useful for testing for `DBNull` and uninstantiated instances of `DateTime`, both of which would throw an exception if not specifically handled otherwise. With this, they can be tested in the same manner as all the rest, greatly reducing code complexity.
 
 ---
 ### **Code Examples:**
