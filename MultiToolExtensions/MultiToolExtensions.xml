@@ -388,11 +388,53 @@
             <param name="list_value">[Required] The list to slice.</param>
         </member>
         <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.URNToList(System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToFullURN(System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToFullURN(System.String,System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToFullURN(System.String,System.String,System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToTableURN(System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.ToTableURN(System.String,System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:MultiToolExtensions.URNFormatting.BreakoutURN(System.String)" -->
+        <member name="M:MultiToolExtensions.URNFormatting.ToFullURN(System.String)">
+            <summary>
+            Takes a basic schema, table, and column URN string, and adds proper bracketed formatting.
+            </summary>
+            <example>
+            <code>
+            string schema_table_column = "fooSchema.barTable.someColumn";
+            string Column_Address = schema_table_column.ToFullURN("fooSchema");
+            Console.WriteLine(Column_Address);
+            //Output:
+            // [fooSchema].[barTable].[someColumn]
+            </code>
+            </example>
+            <param name="urn">[Required] The calling string object.</param>
+        </member>
+        <member name="M:MultiToolExtensions.URNFormatting.ToFullURN(System.String,System.String)">
+            <summary>
+            Takes a basic schema, table, and column URN string, and adds proper bracketed formatting.
+            </summary>
+            <example>
+            <code>
+            string table_column = "barTable.someColumn";
+            string full_address = table_column.ToFullURN("fooSchema");
+            Console.WriteLine(full_address);
+            //Output:
+            // [fooSchema].[barTable].[someColumn]
+            </code>
+            </example>
+            <param name="table_column">[Required] The calling string object.</param>
+            <param name="schema">[Required] The database/schema name to prepend to the string.</param>
+        </member>
+        <member name="M:MultiToolExtensions.URNFormatting.ToFullURN(System.String,System.String,System.String)">
+            <summary>
+            Takes a basic schema, table, and column URN string, and adds proper bracketed formatting.
+            </summary>
+            <example>
+            <code>
+            string column = "someColumn";
+            string full_address = table_column.ToFullURN("fooSchema", "barTable");
+            Console.WriteLine(full_address);
+            //Output:
+            // [fooSchema].[barTable].[someColumn]
+            </code>
+            </example>
+            <param name="column">[Required] The calling object.</param>
+            <param name="table">[Required] The database/schema name to prepend to the string.</param>
+            <param name="schema">[Required] The database/schema name to prepend to the string.</param>
+        </member>
     </members>
 </doc>
