@@ -26,7 +26,7 @@ This is a collection of custom tools I regularly use in large scale text parsing
 
 ## **Installation**
 You can include these into your project via the following methods:
-- ~~NuGet Package (supplied)~~ (Coming soon)
+- NuGet Package (See `dist` folder for latest release)
 - ~~Windows DLL (supplied)~~ (Coming soon)
 - Add the files to your project folder.
 ---
