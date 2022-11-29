@@ -25,7 +25,6 @@ This is a collection of custom tools I regularly use in large scale text parsing
 | `MiscExtensions` | Misc tools, such as SSN RegEx searches, random color generator, etc.|
 
 ## **Installation**
----
 You can include these into your project via the following methods:
 - ~~NuGet Package (supplied)~~ (Coming soon)
 - ~~Windows DLL (supplied)~~ (Coming soon)
@@ -54,7 +53,7 @@ if (date1.isNull()) {
     Console.WriteLine("date1 is NOT null or default")
 }
 // Prints:
-// val1 is null or default
+// date1 is null or default
 ```
 >Assign the value of `val1` to `val2` if `val1` is **NOT** `null` or `default`, or assign the passed value to `val2` if `val1` **IS** `null` or `default`:
 ```c#
@@ -115,10 +114,13 @@ Lastly, there are checks for validating that a State abbreviation is correct. Cu
 | ISO| Function|Type 
 |-----|--------|-------------------------
 | [2] Character| `isValidUSState()`|`Boolean`
+
+It's important to note that although a return value is passed in every method, they all will **update the value of the current variable as well**, as in, the variable performs the operation on itself, and returns it's value afterward. The examples below will show the use of both approaches.
+
 ---
 ### **Code Examples:**
 
->Abbreviating a **State**, **Commonwealth State**, **Province**, or **County** (`abbrevCanadianProvince()`, `abbrevUKCounty()`, `abbrevUKCountry()` and `abbrevMexicanState()`):
+>Abbreviating a **State**, **Commonwealth State**, **Province**, or **County** (`abbrevCanadianProvince()`, `abbrevUKCounty()`, `abbrevUKCountry()` and `abbrevMexicanState()`) by using it's `return` value:
 ```c#
 using MultiToolExtensions;
 
@@ -128,13 +130,13 @@ Console.WriteLine("ISO2 Abbreviation is: " + state_abbrev);
 // Prints:
 // ISO2 Abbreviation is: AR
 ```
->ISO2 Abbreviating a **Country**:
+>ISO2 Abbreviating a **Country** by updating the current variable only:
 ```c#
 using MultiToolExtensions;
 
 string country_name = "Jamaica";
-string country_abbrev = country_name.abbrevCountryISO2();
-Console.WriteLine("ISO2 Country Abbreviation is: " + country_abbrev);
+country_name.abbrevCountryISO2();
+Console.WriteLine("ISO2 Country Abbreviation is: " + country_name);
 // Prints:
 // ISO2 Country Abbreviation is: JM
 ```
@@ -144,8 +146,10 @@ using MultiToolExtensions;
 
 string country_name = "Jamaica";
 string country_abbrev = country_name.abbrevCountryISO3();
+Console.WriteLine("The country_name variable is: " + country_name);
 Console.WriteLine("ISO3 Country Abbreviation is: " + country_abbrev);
 // Prints:
+// The country_name variable is: JAM
 // ISO3 Country Abbreviation is: JAM
 ```
 >Abbreviating a **State** by supplying it's **Country**:
@@ -184,7 +188,9 @@ In order to more efficiently parse out or create formatted database URN addresse
 | `ToFullURN(string)`| Format valid **URN**| `[barTable].[someColumn]`, (`fooSchema`)|`string`
 | `ToFullURN(string, string)`| Format valid **URN**| `someColumn`, (`[barTable]`, `fooSchema`)|`string`
 
-In the cases above, `URNToList()` would return a list value of `["fooSchema", "barTable", "someColumn"]`, while all three `ToFullURN()` methods would return a `string` value of `[fooSchema].[barTable].[someColumn]`.
+In the cases above, `URNToList()` would return a list value of `["fooSchema", "barTable", "someColumn"]`, while all three `ToFullURN()` methods would return a `string` value of `[fooSchema].[barTable].[someColumn]`. Input strings can contain brackets, no brackets, or a mix of both. The formatted value **WILL** be bracketed, however.
+
+As with the other classes, the **value of the calling variable will be updated** and it's value passed as the `return` value.
 
 ---
 ### **Code Examples:**
@@ -224,26 +230,26 @@ Console.WriteLine("The formatted URN is: " + urn);
 ---
 ## **RangeTuple**
 
-Coming soon.
+Documentation coming soon.
 ### **Code Examples:**
 ---
 ## **Definitions**
 
-Coming soon.
+Documentation coming soon.
 ### **Code Examples:**
 ---
 ## **SQLDefinitions**
 
-Coming soon.
+Documentation coming soon.
 ### **Code Examples:**
 ---
 ## **MSAccessDefinitions**
 
-Coming soon.
+Documentation coming soon.
 ### **Code Examples:**
 ---
 ## **MiscExtensions**
 
-Coming soon.
+Documentation coming soon.
 ### **Code Examples:**
 ---
