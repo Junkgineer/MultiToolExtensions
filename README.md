@@ -235,13 +235,108 @@ Documentation coming soon.
 ---
 ## **Definitions**
 
-Documentation coming soon.
+Currently contains a single dictionary used for special character substitution. This was originally made to process Microsoft Access database tables, which allows the use of special characters in their names. Since the majority of MS Access users are regular users and don't know of the problems this can cause, there seem to be an abundance of them being used.
+
+The dictionary acts as a one-to-one replacement for many of the characters. Using a standard such as this ensures consistancy across all projects, and the resultant substitutions are unique enough to allow for easy search and replace later if needed.
+
+The dictionary currently contains the following substitutions:
+
+|Character|Substitution|
+|-----|---------|
+|**$**|`__DOL__`|
+|**&**|`__AMP__`|
+|**(**|`__OPR__`|
+|**)**|`__CPR__`|
+|**%**|`__MOD__`|
+|**!**|`__BNG__`|
+|**@**|`__CAT__`|
+|**^**|`__CAR__`|
+|**\***|`__AST__`|
+|**#**|`__PND__`|
+|**~**|`__TLD__`|
+|**\`**|`__ACC__`|
+|**?**|`__QUE__`|
+|**>**|`__GRT__`|
+|**<**|`__LST__`|
+|**\|**|`__PPE__`|
+|**:**|`__COL__`|
+|**;**|`__SMC__`|
+|**/**|`__FSL__`|
+|**\\**|`__BSL__`|
+|**\"**|`__DBQ__`|
+|**'**|`__SGQ__`|
+---
 ### **Code Examples:**
+>Replace all illegal characters in a string by iterating the subsitution dictionary:
+```c#
+using MultiToolExtensions;
+
+string bad_string = "$58.26 is 10% off?";
+foreach (KeyValuePair<string, string> item in Definitions.SpecialCharSubstitutions)
+{
+    bad_string = bad_string.Replace(item.Key, item.Value);
+}
+Console.WriteLine("bad_string is now: " + bad_string);
+// Prints:
+// bad_string is now: __DOL__58.26 is 10__MOD__ off__QUE__
+```
+
+>Put the original characters back into a string by iterating the subsitution dictionary:
+```c#
+using MultiToolExtensions;
+
+string good_string = "It__SGQ__s still too much__BNG__";
+foreach (KeyValuePair<string, string> item in Definitions.SpecialCharSubstitutions)
+{
+    good_string = bad_string.Replace(item.Value, item.Key);
+}
+Console.WriteLine("good_string is now: " + good_string);
+// Prints:
+// good_string is now: It's still too much!
+```
 ---
 ## **SQLDefinitions**
 
-Documentation coming soon.
+SQLDefinitions contains a number of lists specifically made for parsing SQL queries or any text containing SQL reserved words. Two flavors of SQL are currently represented in this section; **T-SQL** and **ODBC** (see `MSAccessDefinitions` for Microsoft Access specific definitions). 
+
+In addition to reserved word lists, there are specific lists for query types, joins, logical operators, and comparison operators.
+
+|List Name|Example Items|
+|---------|-------------|
+|`PrimaryQueryTypes`| `SELECT`, `INSERT`, <...>|
+|`Reserved_ODBC`| `ABSOLUTE`, `OVERLAPS`, <...>|
+|`Reserved_TSQL`| `FROM`, `BETWEEN`, <...>|
+|`Functions_TSQL`| `CONCAT`, `LEN`, <...>|
+|`Joins_TSQL`| `INNER`, `LEFT`, <...>|
+|`Logical_Operators_TSQL`| `EXISTS`, `LIKE`, <...>|
+|`Comparison_Operators_TSQL`| `=`, `<=`, <...>|
+
+In addition, there is one small Dictionary, `Easy_Clean`, which is used to make the following quick syntax substitutions from MS Access queries to T-SQL:
+
+|MS Access|T-SQL|
+|---------|-------------|
+|`DELETE *`| `DELETE`|
+|`DISTINCTROW`| `DISTINCT`|
+|`&`| `+`|
+|`]!`| `].`|
+|`"`| `'`|
+
 ### **Code Examples:**
+>Identify query type:
+```c#
+using MultiToolExtensions;
+
+string query = "SELECT * FROM [dbo].[MyTable]";
+foreach (string item in SQLDefinitions.PrimaryQueryTypes)
+{
+    if (query.Contains(item)){
+        Console.WriteLine("The query type is: " + item);
+        break;
+    }
+}
+// Prints:
+// The query type is: SELECT
+```
 ---
 ## **MSAccessDefinitions**
 
