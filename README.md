@@ -12,7 +12,7 @@
 
 ---
 ## **Introduction**
-This is a collection of custom tools I regularly use in large scale text parsing and processing. Some are geared towards NLP, while others are for processing source code. I've seperated them into 6 different categorical classes for ease of use:
+This is a collection of custom C# tools I regularly use in large scale text parsing and processing. Some are geared towards NLP, while others are for processing source code. I've seperated them into 6 different categorical classes for ease of use:
 | Class Name | Description |
 | -----------|-------------|
 | `NullTests` | More expansive checks for different types of `null`, `DBNull`, and `default`.|
